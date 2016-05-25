@@ -1,0 +1,78 @@
+<ion-navbar *navbar class="hide-border">
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-segment [(ngModel)]="segment" (change)="updateSchedule()">
+    <ion-segment-button value="all">
+      Upcoming
+    </ion-segment-button>
+    <ion-segment-button value="favorites">
+      Closed
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-buttons end>
+    <button (click)="presentFilter()">
+      <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-toolbar>
+  <ion-searchbar primary
+                 [(ngModel)]="queryText"
+                 (input)="updateSchedule()"
+                 placeholder="Search">
+  </ion-searchbar>
+</ion-toolbar>
+
+<ion-content class="schedule">
+ <ion-card *ngFor="#game of gamess">  
+
+<ion-grid>
+  <ion-row>
+   <ion-col width-50><img src="img/{{game.Country1}}.png" /></ion-col>
+   <ion-col width-50><img src="img/{{game.Country2}}.png" /></ion-col>
+   
+  </ion-row>
+</ion-grid>
+    <ion-card-content>
+     <center> <h2 class="card-title">
+        {{game.Country1}} VS {{game.Country2}} <div [hidden]="!showOpened()">{{game.time | date:"short"}} - OPENED</div><div [hidden]="showOpened()">CLOSED</div>
+      </h2>
+     </center>
+      <!--<p>
+        The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+      </p>-->
+    </ion-card-content>
+
+    <ion-row no-padding>
+      <ion-col>
+        <button clear small [ngClass]="{secondaryy:game.score==1}">
+          <!--<ion-icon name='star'></ion-icon>-->
+          1
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button clear small [ngClass]="{secondaryy:game.score=='X'}">
+          <!--<ion-icon name='musical-notes'></ion-icon>-->
+          X
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button clear small dange [ngClass]="{secondaryy:game.score==2}">
+          <!--<ion-icon name='share-alt'></ion-icon>-->
+          2
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+
+  <!--<button Primary fab fab-bottom fab-center (click)="openModal()">
+        <ion-icon name='add'></ion-icon>
+    </button>-->
+
+</ion-content>
